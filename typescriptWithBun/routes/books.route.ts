@@ -10,3 +10,5 @@ const router = Router()
 router.route("/create").post(
     createBook
 )
+
+export default router

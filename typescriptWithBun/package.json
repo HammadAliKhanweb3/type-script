@@ -1,8 +1,11 @@
 {
   "name": "typescript",
   "module": "index.ts",
-  "type": "common",
+  "type": "commonjs",
   "private": true,
+  "scripts": {
+    "dev":"index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
