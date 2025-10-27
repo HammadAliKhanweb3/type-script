@@ -3,15 +3,16 @@ import mongoose from "mongoose";
 
 
 const connnectDB =async ()=>{
+ 
 
    try {
      const connectionInstance = await mongoose.connect(
          `${process.env.MONGODB_SECRET}/booksStore`
      )
-    console.log(`/n MongoDb Connected !DB HOST: ${connectionInstance.connection.host}`);
+    console.log(`/n ✅ MongoDb Connected !DB HOST: ${connectionInstance.connection.host}`);
     
    } catch (error) {
-    console.error("Mongodb Connection error:",error);
+    console.error("Mongodb Connection error:❌",error);
    }
 
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { CreateBookParams, UpdateBookParams } from 'types/book';
 
-const API_BASE = '/api/books';
+const API_BASE = '/books';
 
 export const createBook = async (params: CreateBookParams) => {
   return await axios.post(API_BASE, params);

@@ -11,11 +11,13 @@ const Port = 3000
 
 connnectDB().then(()=>{
     app.listen(Port,()=>{
-
-        console.log("server is running on port 3000");
+        console.log("✅ Database connected successfully");
+        console.log("🚀 Server is running on port 3000");
     })
 }).catch((error)=>{
-    console.log(error);
-    
+    console.error("❌ Database connection failed:", error);
+    console.log("🛑 Server startup aborted");
+    process.exit(1); // Exit the process if DB connection fails
 })
+
 
