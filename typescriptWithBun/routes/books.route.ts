@@ -7,7 +7,7 @@ const router = Router()
 
 
 
-router.route("/").get(getAllBooks)
+router.route("/get").get(getAllBooks)
 router.route("/:_id").get(getOneBook)
 router.route("/create").post(createBook)
 router.route("/delete").delete(deleteBook)

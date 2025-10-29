@@ -1,14 +1,14 @@
 import axios from 'axios';
 import type { CreateBookParams, UpdateBookParams } from 'types/book';
 
-const API_BASE = '/books';
+const API_BASE = 'http://localhost:3001/books';
 
 export const createBook = async (params: CreateBookParams) => {
-  return await axios.post(API_BASE, params);
+  return await axios.post(`${API_BASE}/create`, params);
 }
 
 export const getAllBooks = async () => {
-  return await axios.get(API_BASE);
+  return await axios.get(`${API_BASE}/get`);
 }
 
 export const updateBook = async (params: UpdateBookParams) => {
@@ -16,7 +16,8 @@ export const updateBook = async (params: UpdateBookParams) => {
 }
 
 export const deleteBook = async (id: number) => {
-  return await axios.delete(`${API_BASE}/${id}`);
+  // Backend expects DELETE /books/delete with JSON body { id }
+  return await axios.delete(`${API_BASE}/delete`, { data: { id } });
 }
 
 export const getBookById = async (id: number) => {

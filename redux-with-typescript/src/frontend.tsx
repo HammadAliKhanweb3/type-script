@@ -8,11 +8,18 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
+import { Provider } from "react-redux";
+import { persisted, store } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
-    <App />
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persisted}>
+       <App />
+      </PersistGate>
+    </Provider>
   </StrictMode>
 );
 

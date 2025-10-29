@@ -5,7 +5,7 @@ import { connnectDB } from "./db";
 
 
 
-const Port = 3000
+const Port = 3001
 
 
 
