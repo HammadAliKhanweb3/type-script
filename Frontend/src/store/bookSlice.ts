@@ -19,7 +19,7 @@ export const doGetAllBooks = createAsyncThunk(
     async (_,thunkAPI)=>{
         try {
             const response = await getAllBooks()
-            return response.data 
+            return response.data.data
         } catch (error) {
                 return thunkAPI.rejectWithValue(error)
         }
