@@ -1,8 +1,10 @@
 // types/models/book.ts
 export interface Book {
-    id: number;
+    _id: string;
     bookname: string;
     bookauthor: string;
+    createdAt:Date,
+    updatedAt:Date,
   }
   
   export interface CreateBookParams {
@@ -11,7 +13,7 @@ export interface Book {
   }
   
   export interface UpdateBookParams extends CreateBookParams {
-    id: number;
+    _id: number;
   }
 
 
