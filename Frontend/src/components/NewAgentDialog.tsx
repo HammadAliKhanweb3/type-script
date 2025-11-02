@@ -11,40 +11,78 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { doCreateBook } from "@/store/bookSlice"
+import { useAppDispatch } from "@/store/hooks"
 
-export function NewAgentDialog() {
+import { useState, type FormEvent } from "react"
+
+export interface DialogProps{
+open:boolean,
+onOpenChange:(open:boolean)=>void,
+}
+
+
+
+
+export function NewBookDialog({open,onOpenChange}:DialogProps) {
+
+const [bookname, setBookname] = useState<string>("")
+const [bookauthor, setBookauthor] = useState<string>("")
+
+ const dispatch =  useAppDispatch()
+  
+ const addBook = (e:FormEvent<HTMLFormElement>)=>{
+  e.preventDefault()
+  dispatch(doCreateBook({data:{bookname,bookauthor},next:()=>{
+    console.log("Successfully added book");
+    setBookauthor("")
+    setBookname("")
+  }}))
+
+  }
+
   return (
-    <Dialog>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+     
+    <Button variant="outline" onClick={()=>onOpenChange(true)}>Open Dialog</Button>
+      <DialogContent className="sm:max-w-[425px]">
+        <form onSubmit={(e)=>{
+          addBook(e)
+        }}>
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
+            <DialogTitle>Add New Book</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+              Add a new book to your collection
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="bookname">Book Name</Label>
+              <Input 
+                id="bookname" 
+                value={bookname}
+                onChange={(e) => setBookname(e.target.value)}
+                placeholder="Enter book name"
+                required
+              />
             </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Username</Label>
-              <Input id="username-1" name="username" defaultValue="@peduarte" />
+            <div className="grid gap-2">
+              <Label htmlFor="bookauthor">Author</Label>
+              <Input 
+                id="bookauthor" 
+                value={bookauthor}
+                onChange={(e) => setBookauthor(e.target.value)}
+                placeholder="Enter author name"
+                required
+              />
             </div>
           </div>
           <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button type="submit">Save changes</Button>
+              <Button type="button" variant="outline" onClick={()=>onOpenChange(false)}>Cancel</Button>
+            <Button type="submit">Add Book</Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   )
 }

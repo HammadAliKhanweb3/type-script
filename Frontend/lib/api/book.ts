@@ -15,9 +15,9 @@ export const updateBook = async (params: UpdateBookParams) => {
   return await axios.put(`${API_BASE}/${params.id}`, params);
 }
 
-export const deleteBook = async (id: number) => {
+export const deleteBook = async (_id: string) => {
   // Backend expects DELETE /books/delete with JSON body { id }
-  return await axios.delete(`${API_BASE}/delete`, { data: { id } });
+  return await axios.delete(`${API_BASE}/delete`, { data: { _id } });
 }
 
 export const getBookById = async (id: number) => {

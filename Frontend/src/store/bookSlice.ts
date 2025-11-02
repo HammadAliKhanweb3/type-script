@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { createBook, getAllBooks } from "lib/api/book";
+import { createBook, deleteBook, getAllBooks } from "lib/api/book";
 import type { Book } from "types/book";
 
 
@@ -26,18 +26,31 @@ export const doGetAllBooks = createAsyncThunk(
     }
 ) 
 
-export const doCreateBook = createAsyncThunk<Book,{data:Omit<Book,"id">; next:()=>void}>(
+export const doCreateBook = createAsyncThunk<Book,{data:Omit<Book,"_id">; next:()=>void}>(
     "book/create",
     async ({data,next},thunkAPI)=>{
         try {
             const response = await createBook(data)
             next()
-            return response.data 
+            return response.data.createdBook 
         } catch (error) {
                 return thunkAPI.rejectWithValue(error)
         }
     }
 ) 
+
+export const doDeleteBook = createAsyncThunk<string,{_id:string; next:()=>void}>(
+    "book/delete",
+    async ({_id,next},thunkAPI)=>{
+        try {
+            const response = await deleteBook(_id)
+            next()
+            return _id
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+)
 
 
 const updateBookState =  (state:Book[],payload:Book)=>{
@@ -64,12 +77,12 @@ const bookSlice = createSlice({
         }),
          builder.addCase(doCreateBook.fulfilled,(state,{payload})=>{
          state.items.push(payload)
+        }),
+        builder.addCase(doDeleteBook.fulfilled,(state,{payload:_id})=>{
+          state.items = state.items.filter((book)=>book._id !== _id)
         })
     },
-    
 },
-   
-   
 )
 
 

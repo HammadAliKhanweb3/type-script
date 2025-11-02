@@ -11,6 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import type { Book } from "types/book"
+import { useAppDispatch } from "@/store/hooks"
+import { doDeleteBook, updateBook } from "@/store/bookSlice"
+
+
 
 
 export const columns: ColumnDef<Book>[] = [
@@ -21,12 +25,12 @@ export const columns: ColumnDef<Book>[] = [
     cell:({row})=>{
      return (
   
-      <div className="text-right font-medium">
+      <div className="font-medium text-left">
       {row.original.bookname}
       </div>
       
     
-     )
+     )  
   }},
   {
     accessorKey: "authorName",
@@ -34,7 +38,7 @@ export const columns: ColumnDef<Book>[] = [
     cell:({row})=>{
  return(
   
-  <div className="text-right font-medium">
+  <div className="font-medium text-left">
   {row.original.bookauthor}
 </div>
  )
@@ -43,12 +47,26 @@ export const columns: ColumnDef<Book>[] = [
     id:"actions",
     cell:({row})=>{
       const detail = row.original
-      console.log("in data table",detail._id);
-      console.log("in data table",detail);
-      console.log("in data table 2",detail.bookname);
       
+      const dispatch = useAppDispatch()
+
+
+  const handleUpdate = () =>{
+  dispatch(updateBook(detail))
+  }
+
+
+
+
+const handleDelete = () => {
+         dispatch(doDeleteBook({
+          _id: detail._id,
+          next: () => { 
+            console.log("Successfully Deleted Book");
+          }
+        }));
+      }
  return(
-  
   <DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button variant="ghost" className="h-8 w-8 p-0">
@@ -64,8 +82,8 @@ export const columns: ColumnDef<Book>[] = [
       Copy book ID
     </DropdownMenuItem>
     <DropdownMenuSeparator />
-    <DropdownMenuItem>View customer</DropdownMenuItem>
-    <DropdownMenuItem>View More details</DropdownMenuItem>
+    <DropdownMenuItem onClick={handleUpdate}>Update Book</DropdownMenuItem>
+    <DropdownMenuItem onClick={handleDelete}>Delete Book</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
  )

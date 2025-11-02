@@ -3,8 +3,6 @@ export interface Book {
     _id: string;
     bookname: string;
     bookauthor: string;
-    createdAt:Date,
-    updatedAt:Date,
   }
   
   export interface CreateBookParams {

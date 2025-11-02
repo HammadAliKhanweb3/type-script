@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { NewAgentDialog } from './NewAgentDialog'
+import { NewBookDialog } from './NewAgentDialog'
 
 const BooksListHeader = () => {
+  const [isDialogOpen,setIsDialogOpen] = useState<boolean>(false)
+  
+
   return (
    
     <div className='flex justify-between p-5'>
-      <h5>All Agents</h5>
-      {/* <Button onClick={}>Add Book</Button> */}
-      <NewAgentDialog/>
-    </div>
+      <h5 className='text-xl font-bold'>All Books</h5>
+      <NewBookDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}/>
+    </div>  
   )
 }
 
