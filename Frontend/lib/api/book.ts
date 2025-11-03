@@ -12,7 +12,7 @@ export const getAllBooks = async () => {
 }
 
 export const updateBook = async (params: UpdateBookParams) => {
-  return await axios.put(`${API_BASE}/${params.id}`, params);
+  return await axios.put(`${API_BASE}/${params._id}`, params);
 }
 
 export const deleteBook = async (_id: string) => {
@@ -20,6 +20,6 @@ export const deleteBook = async (_id: string) => {
   return await axios.delete(`${API_BASE}/delete`, { data: { _id } });
 }
 
-export const getBookById = async (id: number) => {
-  return await axios.get(`${API_BASE}/${id}`);
+export const getBookById = async (_id: string) => {
+  return await axios.get(`${API_BASE}/${_id}`);
 }

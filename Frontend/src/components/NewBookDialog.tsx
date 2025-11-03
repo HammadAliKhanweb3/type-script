@@ -19,12 +19,14 @@ import { useState, type FormEvent } from "react"
 export interface DialogProps{
 open:boolean,
 onOpenChange:(open:boolean)=>void,
+title:string,
+description:string,
 }
 
 
 
 
-export function NewBookDialog({open,onOpenChange}:DialogProps) {
+export function NewBookDialog({open,onOpenChange,title,description}:DialogProps) {
 
 const [bookname, setBookname] = useState<string>("")
 const [bookauthor, setBookauthor] = useState<string>("")
@@ -43,16 +45,14 @@ const [bookauthor, setBookauthor] = useState<string>("")
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-     
-    <Button variant="outline" onClick={()=>onOpenChange(true)}>Open Dialog</Button>
       <DialogContent className="sm:max-w-[425px]">
         <form onSubmit={(e)=>{
           addBook(e)
         }}>
           <DialogHeader>
-            <DialogTitle>Add New Book</DialogTitle>
+            <DialogTitle>{title}</DialogTitle>
             <DialogDescription>
-              Add a new book to your collection
+              {description}
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -79,7 +79,7 @@ const [bookauthor, setBookauthor] = useState<string>("")
           </div>
           <DialogFooter>
               <Button type="button" variant="outline" onClick={()=>onOpenChange(false)}>Cancel</Button>
-            <Button type="submit">Add Book</Button>
+            <Button type="submit" onClick={()=>onOpenChange(false)}>Add Book</Button>
           </DialogFooter>
         </form>
       </DialogContent>

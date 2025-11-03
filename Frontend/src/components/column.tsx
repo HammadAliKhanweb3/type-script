@@ -1,6 +1,5 @@
 import {type ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
- 
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,6 +12,8 @@ import {
 import type { Book } from "types/book"
 import { useAppDispatch } from "@/store/hooks"
 import { doDeleteBook, updateBook } from "@/store/bookSlice"
+import { NewBookDialog } from "./NewBookDialog"
+import { useState } from "react"
 
 
 
@@ -47,12 +48,19 @@ export const columns: ColumnDef<Book>[] = [
     id:"actions",
     cell:({row})=>{
       const detail = row.original
-      
       const dispatch = useAppDispatch()
+   
+      const [isDialogOpen,setIsDialogOpen] = useState(false)
+      const [bookname,setBookName] = useState("")
+      const [bookauthor,setBookAuthor] = useState("")
+
 
 
   const handleUpdate = () =>{
-  dispatch(updateBook(detail))
+    setIsDialogOpen(true);
+    const _id = detail._id
+  dispatch(updateBook({_id,bookname,bookauthor}))
+
   }
 
 
@@ -67,6 +75,7 @@ const handleDelete = () => {
         }));
       }
  return(
+  <>
   <DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button variant="ghost" className="h-8 w-8 p-0">
@@ -86,16 +95,9 @@ const handleDelete = () => {
     <DropdownMenuItem onClick={handleDelete}>Delete Book</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
+
+<NewBookDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}  title="Update Book" description="update your book"/>
+</>
  )
   }},
-
-
-
-
-
-
-
-
-
-
 ]
