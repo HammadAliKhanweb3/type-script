@@ -54,8 +54,10 @@ export const doDeleteBook = createAsyncThunk<string,{_id:string; next:()=>void}>
 
 
 const updateBookState =  (state:Book[],payload:Book)=>{
-   
+    console.log("update Book:",payload);
+    
     const index = state.findIndex(item => item._id === payload._id)
+    console.log("Loop:",payload);
     if(index>-1){
      state[index] = payload      
     }       

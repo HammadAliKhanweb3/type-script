@@ -12,8 +12,9 @@ import {
 import type { Book } from "types/book"
 import { useAppDispatch } from "@/store/hooks"
 import { doDeleteBook, updateBook } from "@/store/bookSlice"
-import { NewBookDialog } from "./NewBookDialog"
+import { ResponsiveDialog } from "./ResponsiveDialog"
 import { useState } from "react"
+import CreateBookForm from "./BookForm"
 
 
 
@@ -51,21 +52,7 @@ export const columns: ColumnDef<Book>[] = [
       const dispatch = useAppDispatch()
    
       const [isDialogOpen,setIsDialogOpen] = useState(false)
-      const [bookname,setBookName] = useState("")
-      const [bookauthor,setBookAuthor] = useState("")
-
-
-
-  const handleUpdate = () =>{
-    setIsDialogOpen(true);
-    const _id = detail._id
-  dispatch(updateBook({_id,bookname,bookauthor}))
-
-  }
-
-
-
-
+    
 const handleDelete = () => {
          dispatch(doDeleteBook({
           _id: detail._id,
@@ -91,12 +78,14 @@ const handleDelete = () => {
       Copy book ID
     </DropdownMenuItem>
     <DropdownMenuSeparator />
-    <DropdownMenuItem onClick={handleUpdate}>Update Book</DropdownMenuItem>
+    <DropdownMenuItem onClick={()=>setIsDialogOpen(true)}>Update Book</DropdownMenuItem>
     <DropdownMenuItem onClick={handleDelete}>Delete Book</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 
-<NewBookDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}  title="Update Book" description="update your book"/>
+<ResponsiveDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}  title="Update Book" description="update your book" >
+  <CreateBookForm onCancel={()=>setIsDialogOpen(false)} initialValues={detail}/>
+  </ResponsiveDialog>
 </>
  )
   }},
